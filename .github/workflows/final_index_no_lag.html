@@ -1,0 +1,201 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yadav - Spend Billions</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      color: white;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      font-size: 3em;
+      margin-bottom: 10px;
+    }
+    #money {
+      text-align: center;
+      font-size: 2em;
+      margin-bottom: 30px;
+    }
+    .items {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 20px;
+    }
+    .item {
+      background: #ffffff12;
+      padding: 15px;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      transition: transform 0.2s ease;
+    }
+    .item:hover {
+      transform: scale(1.05);
+    }
+    .item img {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+    button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      background-color: #00ffc3;
+      color: #000;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    select {
+      margin-top: 10px;
+      padding: 5px;
+    }
+    .confetti {
+      position: fixed;
+      width: 100vw;
+      height: 100vh;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 9999;
+    }
+  </style>
+</head>
+<body>
+  <div style="text-align:center; margin-bottom: 20px;">
+    <label for="playerName">Enter your name: </label>
+    <input type="text" id="playerName" placeholder="Your Name" oninput="updatePlayerName()" />
+  </div>
+  <h1 id="playerHeader">Spend Yadav's Billions</h1>
+  <div id="money">$1,000,000,000</div>
+  <div class="items" id="itemContainer"></div>
+  <canvas class="confetti" id="confettiCanvas"></canvas>
+  <audio id="purchaseSound" src="Cash Register Purchase Sound Effects Download - MobCup.Com.Co.mp3" preload="auto"></audio>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <script>
+    let money = 1000000000;
+
+let totalSpent = 0;
+let currentLevel = 1;
+const milestones = [
+  { level: 2, spent: 1000000, message: "Level 2: Millionaire Spender!" },
+  { level: 3, spent: 10000000, message: "Level 3: Property Tycoon!" },
+  { level: 4, spent: 100000000, message: "Level 4: Luxury Addict!" },
+  { level: 5, spent: 500000000, message: "Level 5: Mega Mogul!" },
+  { level: 6, spent: 900000000, message: "Level 6: Almost Broke Billionaire!" }
+];
+
+function checkMilestone() {
+  milestones.forEach(m => {
+    if (totalSpent >= m.spent && currentLevel < m.level) {
+      currentLevel = m.level;
+      alert(m.message);
+    }
+  });
+}
+
+    const items = [{"name": "iPhone 15 Pro", "price": 999, "image": "https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-15-pro-finish-select-202309-6-1inch-black-titanium?wid=512&hei=512&fmt=jpeg&qlt=95&.v=1692827800197"}, {"name": "Netflix Subscription (1 Year)", "price": 180, "image": "https://1000logos.net/wp-content/uploads/2017/05/Netflix-Logo.png"}, {"name": "Football Stadium", "price": 100000000, "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Signal_Iduna_Park_2012.jpg/640px-Signal_Iduna_Park_2012.jpg"}, {"name": "Private Jet", "price": 40000000, "image": "https://upload.wikimedia.org/wikipedia/commons/f/fd/Gulfstream_G650_%28cropped%29.jpg"}, {"name": "Yacht", "price": 75000000, "image": "https://upload.wikimedia.org/wikipedia/commons/0/00/BOATY_McBOATFACE_%2830899027566%29.jpg"}, {"name": "Luxury Villa", "price": 15000000, "image": "https://cdn.pixabay.com/photo/2016/11/29/10/07/villa-1867187_1280.jpg"}, {"name": "Lamborghini Aventador", "price": 393000, "image": "https://cdn.pixabay.com/photo/2017/01/06/19/15/lamborghini-1955502_1280.jpg"}, {"name": "Ferrari SF90", "price": 507000, "image": "https://cdn.pixabay.com/photo/2017/01/06/19/15/ferrari-1955504_1280.jpg"}, {"name": "Rolex Watch", "price": 12000, "image": "https://cdn.pixabay.com/photo/2016/11/29/12/54/rolex-1869394_1280.jpg"}, {"name": "Gaming PC", "price": 2500, "image": "https://cdn.pixabay.com/photo/2020/05/29/09/20/pc-5231333_1280.jpg"}, {"name": "Private Island", "price": 5000000, "image": "https://upload.wikimedia.org/wikipedia/commons/1/12/Island_from_above.jpg"}, {"name": "Space Flight", "price": 250000, "image": "https://upload.wikimedia.org/wikipedia/commons/5/51/Blue_Origin_New_Shepard_launch_-_April_29%2C_2018_%2841970778442%29.jpg"}, {"name": "Gold Bar", "price": 60000, "image": "https://upload.wikimedia.org/wikipedia/commons/0/01/Gold_Bars.jpg"}, {"name": "Tesla Model S", "price": 89990, "image": "https://cdn.pixabay.com/photo/2019/10/22/10/36/tesla-4560161_1280.jpg"}, {"name": "Art Masterpiece", "price": 45000000, "image": "https://upload.wikimedia.org/wikipedia/commons/f/f4/Vincent_Willem_van_Gogh_103.jpg"}, {"name": "Super Bowl Ad", "price": 7000000, "image": "https://upload.wikimedia.org/wikipedia/commons/4/4f/Super_Bowl_LIII_Logo.svg"}, {"name": "Theme Park", "price": 1500000000, "image": "https://upload.wikimedia.org/wikipedia/commons/f/f6/Fantasyland_Disneyland.jpg"}, {"name": "NBA Team", "price": 2000000000, "image": "https://upload.wikimedia.org/wikipedia/commons/e/e9/NBA_logo.svg"}, {"name": "Movie Production", "price": 100000000, "image": "https://upload.wikimedia.org/wikipedia/commons/5/59/Clapboard.jpg"}, {"name": "Private Chef (Year)", "price": 100000, "image": "https://upload.wikimedia.org/wikipedia/commons/4/4d/Chef.png"}, {"name": "Penthouse Apartment", "price": 3500000, "image": "https://upload.wikimedia.org/wikipedia/commons/b/b2/Penthouse_Interior.jpg"}, {"name": "Helicopter", "price": 1600000, "image": "https://upload.wikimedia.org/wikipedia/commons/f/fe/Bell_407_helicopter.jpg"}, {"name": "Luxury Cruise", "price": 100000, "image": "https://upload.wikimedia.org/wikipedia/commons/8/8f/Luxury_Cruise_Ship.jpg"}, {"name": "F1 Race Car", "price": 15000000, "image": "https://upload.wikimedia.org/wikipedia/commons/3/37/Ferrari_2019_formula_1_car.jpg"}, {"name": "Professional Recording Studio", "price": 500000, "image": "https://upload.wikimedia.org/wikipedia/commons/b/b2/Music_Recording_Studio.jpg"}, {"name": "World Tour", "price": 350000, "image": "https://upload.wikimedia.org/wikipedia/commons/9/9c/Airplane_view_over_world.jpg"}, {"name": "Hollywood Mansion", "price": 25000000, "image": "https://upload.wikimedia.org/wikipedia/commons/1/1a/Beverly_Hills_mansion.jpg"}, {"name": "Diamond Ring", "price": 15000, "image": "https://upload.wikimedia.org/wikipedia/commons/6/6a/Diamond_Ring.jpg"}, {"name": "Private Zoo", "price": 3000000, "image": "https://upload.wikimedia.org/wikipedia/commons/6/67/Lion_in_Zoo.jpg"}, {"name": "Luxury Watch Collection", "price": 250000, "image": "https://upload.wikimedia.org/wikipedia/commons/e/e3/Luxury_watch_display.jpg"}, {"name": "Giant Aquarium", "price": 800000, "image": "https://upload.wikimedia.org/wikipedia/commons/6/6e/Large_aquarium.jpg"}, {"name": "Custom Motorcycle", "price": 75000, "image": "https://upload.wikimedia.org/wikipedia/commons/c/cf/Custom_motorcycle.jpg"}, {"name": "Race Horse", "price": 500000, "image": "https://upload.wikimedia.org/wikipedia/commons/f/f0/Race_Horse.jpg"}, {"name": "Fashion Line", "price": 1000000, "image": "https://upload.wikimedia.org/wikipedia/commons/0/00/Fashion_Runway.jpg"}, {"name": "Famous Painting", "price": 70000000, "image": "https://upload.wikimedia.org/wikipedia/commons/5/56/Mona_Lisa.jpg"}, {"name": "Luxury Home Theater", "price": 120000, "image": "https://upload.wikimedia.org/wikipedia/commons/e/e8/Home_theater_setup.jpg"}, {"name": "Private Concert", "price": 3000000, "image": "https://upload.wikimedia.org/wikipedia/commons/6/6c/Concert_stage.jpg"}, {"name": "Space Station Stay", "price": 55000000, "image": "https://upload.wikimedia.org/wikipedia/commons/2/27/International_Space_Station.jpg"}, {"name": "Jet Ski", "price": 12000, "image": "https://cdn.pixabay.com/photo/2016/11/29/05/01/jet-ski-1867020_1280.jpg"}, {"name": "Robot Assistant", "price": 90000, "image": "https://upload.wikimedia.org/wikipedia/commons/f/f4/Robotic_Assistant.jpg"}, {"name": "Luxury Hot Tub", "price": 15000, "image": "https://upload.wikimedia.org/wikipedia/commons/1/1c/Outdoor_hot_tub.jpg"}, {"name": "NFT Artwork", "price": 300000, "image": "https://upload.wikimedia.org/wikipedia/commons/e/e5/NFT_Art.png"}, {"name": "Crypto Investment", "price": 100000, "image": "https://upload.wikimedia.org/wikipedia/commons/3/37/BTC_Logo.svg"}, {"name": "Electric Bike", "price": 2000, "image": "https://upload.wikimedia.org/wikipedia/commons/e/e2/Electric_Bike.jpg"}, {"name": "Go Kart Track", "price": 750000, "image": "https://upload.wikimedia.org/wikipedia/commons/f/f3/Go-kart_racing.jpg"}, {"name": "Underground Bunker", "price": 5000000, "image": "https://upload.wikimedia.org/wikipedia/commons/7/7e/Underground_shelter.jpg"}, {"name": "Drone Fleet", "price": 100000, "image": "https://upload.wikimedia.org/wikipedia/commons/6/64/Drone_swarm.jpg"}, {"name": "Ski Resort", "price": 25000000, "image": "https://upload.wikimedia.org/wikipedia/commons/6/6f/Ski_resort_mountains.jpg"}, {"name": "Luxury Safari", "price": 40000, "image": "https://upload.wikimedia.org/wikipedia/commons/9/9e/Safari_truck.jpg"}, {"name": "Moon Rock", "price": 5000000, "image": "https://upload.wikimedia.org/wikipedia/commons/3/37/Moon_rock_Apollo_17.jpg"}];
+
+    const container = document.getElementById('itemContainer');
+    const moneyDiv = document.getElementById('money');
+    const sound = document.getElementById('purchaseSound');
+
+    function createItemCard(item) {
+      const div = document.createElement('div');
+      div.className = 'item';
+      div.innerHTML = `
+        <img loading="lazy" src="${item.image}" alt="${item.name}" onerror="this.src='https://via.placeholder.com/200x140?text=No+Image'" />
+        <h3>${item.name}</h3>
+        <p>Price: $${item.price.toLocaleString()}</p>
+        <select id="qty-${item.name}">
+          ${[...Array(10).keys()].map(i => `<option value="${i+1}">${i+1}</option>`).join('')}
+        </select><br/>
+        <button onclick="buyItem('${item.name}', ${item.price})">Buy</button>
+      `;
+      return div;
+    }
+
+    function renderItems() {
+      const fragment = document.createDocumentFragment();
+      items.forEach(item => {
+        fragment.appendChild(createItemCard(item));
+      });
+      container.appendChild(fragment);
+    }
+
+    function buyItem(name, price) {
+      const qty = document.getElementById(`qty-${name}`).value;
+      const total = price * qty;
+      if (money >= total) {
+        money -= total;
+        moneyDiv.innerText = "$" + money.toLocaleString();
+totalSpent += total;
+checkMilestone();
+if(money <= 0) showCertificate();
+        if (!sound.paused) sound.pause();
+        sound.currentTime = 0;
+        try {
+          sound.play();
+        } catch (e) {
+          console.warn("Sound could not play: ", e);
+        }
+        launchConfetti();
+      } else {
+        alert("Not enough money!");
+      }
+    }
+
+    function updatePlayerName() {
+      const name = document.getElementById("playerName").value;
+      const header = document.getElementById("playerHeader");
+      header.innerText = name ? name + "'s Billionaire Game" : "Spend Yadav's Billions";
+    }
+
+    function launchConfetti() {
+      confetti({
+        particleCount: 30,
+        spread: 50,
+        origin: { y: 0.6 }
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", renderItems);
+  </script>
+
+<div id="certificateModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#000000cc; z-index:9999; align-items:center; justify-content:center;">
+  <div style="background:white; color:black; padding:40px; border-radius:15px; text-align:center; width:80%; max-width:500px; box-shadow:0 0 20px #00ffc3;">
+    <h2>🎓 Certificate of Spending</h2>
+    <p>This certifies that</p>
+    <h1 id="certPlayerName" style="font-size:2em; margin:10px 0;">[Player Name]</h1>
+    <p>has successfully spent</p>
+    <h2>$1,000,000,000</h2>
+    <p>on luxurious and possibly questionable items</p>
+    <p><strong>Congratulations!</strong> You're officially BROKE 😄</p>
+    <button onclick="closeCertificate()">Close</button>
+  </div>
+</div>
+
+<script>
+  function showCertificate() {
+    const modal = document.getElementById("certificateModal");
+    const name = document.getElementById("playerName").value || "Anonymous";
+    document.getElementById("certPlayerName").innerText = name;
+    modal.style.display = "flex";
+  }
+
+  function closeCertificate() {
+    document.getElementById("certificateModal").style.display = "none";
+  }
+</script>
+</body>
+
+</html>
